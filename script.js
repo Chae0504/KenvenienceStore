@@ -1,16 +1,16 @@
 // --- Mock Data ---
 const initialPromos = [
-    { id: 1, name: "Coca-Cola 500ml", category: "Beverage", price: "2,200원", promo: "1+1", image: "🥤" },
-    { id: 2, name: "Pringles Onion", category: "Snack", price: "3,500원", promo: "2+1", image: "🍟" },
-    { id: 3, name: "Samgak Gimbap", category: "Instant Meal", price: "1,200원", promo: "2+1", image: "🍙" },
-    { id: 4, name: "Banana Milk", category: "Beverage", price: "1,700원", promo: "1+1", image: "🥛" },
-    { id: 5, name: "Pepero Choco", category: "Snack", price: "1,500원", promo: "2+1", image: "🍫" },
-    { id: 6, name: "Shin Ramyun Small", category: "Instant Meal", price: "1,100원", promo: "2+1", image: "🍜" },
+    { id: 1, name: "코카콜라 500ml", category: "Beverage", price: "2,200원", promo: "1+1", image: "🥤" },
+    { id: 2, name: "프링글스 어니언", category: "Snack", price: "3,500원", promo: "2+1", image: "🍟" },
+    { id: 3, name: "참치마요 삼각김밥", category: "Instant Meal", price: "1,200원", promo: "2+1", image: "🍙" },
+    { id: 4, name: "빙그레 바나나우유", category: "Beverage", price: "1,700원", promo: "1+1", image: "🥛" },
+    { id: 5, name: "빼빼로 초코", category: "Snack", price: "1,500원", promo: "2+1", image: "🍫" },
+    { id: 6, name: "신라면 소컵", category: "Instant Meal", price: "1,100원", promo: "2+1", image: "🍜" },
 ];
 
 const initialDeals = [
-    { id: 101, item: "Coca-Cola 500ml", type: "1+1", location: "Dorm A Lobby", joined: 1, total: 2, status: "Active" },
-    { id: 102, item: "Pringles Onion", type: "2+1", location: "Store Entrance", joined: 2, total: 3, status: "Active" },
+    { id: 101, item: "코카콜라 500ml", type: "1+1", location: "기숙사 A동 로비", joined: 1, total: 2, status: "Active" },
+    { id: 102, item: "프링글스 어니언", type: "2+1", location: "편의점 입구", joined: 2, total: 3, status: "Active" },
 ];
 
 // --- App State ---
@@ -25,6 +25,7 @@ const requestList = document.getElementById('request-list');
 const orderForm = document.getElementById('order-request-form');
 const createDealForm = document.getElementById('create-deal-form');
 const filterBtns = document.querySelectorAll('.filter-btn');
+const promoSearch = document.getElementById('promo-search');
 
 // Modal Elements
 const modal = document.getElementById('deal-modal');
@@ -33,9 +34,18 @@ const closeModalBtn = document.querySelector('.close-modal');
 
 // --- Functions ---
 
-function renderPromos(filter = 'all') {
+function renderPromos(filter = 'all', searchTerm = '') {
     promoGrid.innerHTML = '';
-    const filtered = filter === 'all' ? promos : promos.filter(p => p.category === filter);
+    let filtered = filter === 'all' ? promos : promos.filter(p => p.category === filter);
+    
+    if (searchTerm) {
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
+    }
+
+    if (filtered.length === 0) {
+        promoGrid.innerHTML = '<p style="padding: 20px; color: #999">해당하는 상품이 없습니다.</p>';
+        return;
+    }
     
     filtered.forEach(item => {
         const card = document.createElement('div');
@@ -46,13 +56,23 @@ function renderPromos(filter = 'all') {
                 <span class="promo-tag">${item.promo}</span>
             </div>
             <div class="item-info">
-                <span class="item-category">${item.category}</span>
+                <span class="item-category">${getCategoryName(item.category)}</span>
                 <h3>${item.name}</h3>
                 <p class="item-price">${item.price}</p>
             </div>
         `;
         promoGrid.appendChild(card);
     });
+}
+
+function getCategoryName(cat) {
+    const names = {
+        'Beverage': '음료',
+        'Snack': '과자류',
+        'Instant Meal': '간편식',
+        'Other': '기타'
+    };
+    return names[cat] || cat;
 }
 
 function renderDeals() {
@@ -64,27 +84,26 @@ function renderDeals() {
         card.innerHTML = `
             <div class="deal-header">
                 <span class="deal-status" style="color: ${isFull ? '#666' : 'var(--primary-green)'}">
-                    ${isFull ? 'Completed' : 'Recruiting'}
+                    ${isFull ? '모집완료' : '모집중'}
                 </span>
-                <span class="deal-count">${deal.joined}/${deal.total} joined</span>
+                <span class="deal-count">${deal.joined}/${deal.total} 명 참여</span>
             </div>
             <div class="deal-info">
                 <h3>${deal.item}</h3>
                 <div class="deal-meta">
                     <span>📍 ${deal.location}</span><br>
-                    <span>🏷️ ${deal.type} Promo</span>
+                    <span>🏷️ ${deal.type} 행사</span>
                 </div>
             </div>
             <button class="btn btn-primary btn-block join-btn" 
                 data-id="${deal.id}" 
                 ${isFull ? 'disabled' : ''}>
-                ${isFull ? 'Closed' : 'Join Deal'}
+                ${isFull ? '마감됨' : '참여하기'}
             </button>
         `;
         splitDealGrid.appendChild(card);
     });
 
-    // Add Join Event Listeners
     document.querySelectorAll('.join-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const id = parseInt(e.target.dataset.id);
@@ -96,20 +115,48 @@ function renderDeals() {
 function renderRequests() {
     requestList.innerHTML = '';
     if (requests.length === 0) {
-        requestList.innerHTML = '<p style="color: #999">No requests yet.</p>';
+        requestList.innerHTML = '<p style="color: #999">아직 요청이 없습니다.</p>';
         return;
     }
 
-    // Show last 5 requests
-    requests.slice().reverse().slice(0, 5).forEach(req => {
+    // 정렬: 좋아요 순 -> 최신 순
+    const sortedRequests = [...requests].sort((a, b) => {
+        if ((b.likes || 0) !== (a.likes || 0)) {
+            return (b.likes || 0) - (a.likes || 0);
+        }
+        return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+
+    sortedRequests.slice(0, 10).forEach(req => {
         const li = document.createElement('li');
         li.className = 'request-item';
         li.innerHTML = `
             <h4>${req.name}</h4>
-            <p class="meta">${req.category} | ${req.reason}</p>
+            <p class="meta">${getCategoryName(req.category)} | ${req.reason}</p>
+            <div class="request-footer">
+                <button class="like-btn" data-id="${req.id}">
+                    ❤️ 추천 <span class="like-count">${req.likes || 0}</span>
+                </button>
+            </div>
         `;
         requestList.appendChild(li);
     });
+
+    // 좋아요 버튼 이벤트
+    document.querySelectorAll('.like-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.target.closest('.like-btn').dataset.id;
+            addLike(id);
+        });
+    });
+}
+
+function addLike(id) {
+    const req = requests.find(r => r.id === id);
+    if (req) {
+        req.likes = (req.likes || 0) + 1;
+        saveAndRender();
+    }
 }
 
 function joinDeal(id) {
@@ -129,31 +176,39 @@ function saveAndRender() {
 
 // --- Event Handlers ---
 
-// Filtering
+// 검색 기능
+promoSearch.addEventListener('input', (e) => {
+    const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+    renderPromos(activeFilter, e.target.value);
+});
+
+// 필터링
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        renderPromos(btn.dataset.filter);
+        renderPromos(btn.dataset.filter, promoSearch.value);
     });
 });
 
-// Order Request Form
+// 발주 요청 폼
 orderForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const newRequest = {
+        id: Date.now().toString(),
         name: document.getElementById('item-name').value,
         category: document.getElementById('item-category').value,
         reason: document.getElementById('request-reason').value,
+        likes: 0,
         timestamp: new Date().toISOString()
     };
     requests.push(newRequest);
     orderForm.reset();
     saveAndRender();
-    alert('Request submitted! Thank you.');
+    alert('발주 요청이 등록되었습니다!');
 });
 
-// Create Deal Form
+// Split-the-Deal 폼
 createDealForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const newDeal = {

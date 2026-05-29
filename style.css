@@ -422,6 +422,62 @@ header {
     cursor: pointer;
 }
 
+/* Search Bar */
+.search-container {
+    flex-grow: 1;
+    margin: 0 20px;
+}
+
+#promo-search {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+#promo-search:focus {
+    border-color: var(--primary-green);
+}
+
+/* Like Button Styling */
+.request-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.like-btn {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 4px 12px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.2s;
+}
+
+.like-btn:hover {
+    background: #fff0f0;
+    border-color: var(--primary-red);
+    color: var(--primary-red);
+}
+
+.like-btn.active {
+    background: var(--primary-red);
+    color: white;
+    border-color: var(--primary-red);
+}
+
+.like-count {
+    font-weight: 700;
+}
+
 /* Footer */
 footer {
     padding: 40px 0;

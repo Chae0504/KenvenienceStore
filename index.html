@@ -17,9 +17,9 @@
                 <span class="logo-subtext">Store</span>
             </div>
             <ul class="nav-links">
-                <li><a href="#promo-section">Promos</a></li>
+                <li><a href="#promo-section">행사상품</a></li>
                 <li><a href="#split-section">Split-the-Deal</a></li>
-                <li><a href="#request-section">Request Item</a></li>
+                <li><a href="#request-section">발주요청</a></li>
             </ul>
             <div class="mobile-menu-btn">
                 <span></span>
@@ -33,10 +33,10 @@
         <!-- Hero Section / Announcements -->
         <section class="hero">
             <div class="container">
-                <h1>KENTECH Dormitory <br><span class="highlight">Smart Convenience</span></h1>
-                <p>Check today's 1+1 / 2+1 deals, find split partners, and request your favorite items.</p>
+                <h1>KENTECH 기숙사 <br><span class="highlight">스마트 편의점</span></h1>
+                <p>오늘의 1+1 / 2+1 행사를 확인하고, 함께 살 친구를 찾거나 원하는 상품을 요청하세요.</p>
                 <div class="announcement-bar">
-                    <span class="badge">Notice</span> New Seven-Eleven items arrived this morning!
+                    <span class="badge">공지</span> 오늘 아침 새로운 세븐일레븐 상품들이 입고되었습니다!
                 </div>
             </div>
         </section>
@@ -45,12 +45,15 @@
         <section id="promo-section" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2>Current Promotions</h2>
+                    <h2>행사 및 재고 확인</h2>
+                    <div class="search-container">
+                        <input type="text" id="promo-search" placeholder="상품명으로 검색...">
+                    </div>
                     <div class="filter-buttons">
-                        <button class="filter-btn active" data-filter="all">All</button>
-                        <button class="filter-btn" data-filter="Snack">Snacks</button>
-                        <button class="filter-btn" data-filter="Beverage">Drinks</button>
-                        <button class="filter-btn" data-filter="Instant Meal">Meals</button>
+                        <button class="filter-btn active" data-filter="all">전체</button>
+                        <button class="filter-btn" data-filter="Snack">과자류</button>
+                        <button class="filter-btn" data-filter="Beverage">음료</button>
+                        <button class="filter-btn" data-filter="Instant Meal">간편식</button>
                     </div>
                 </div>
                 <div id="promo-grid" class="grid">
@@ -63,10 +66,10 @@
         <section id="split-section" class="section bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Split-the-Deal Board</h2>
-                    <button id="open-deal-modal" class="btn btn-primary">Create New Deal</button>
+                    <h2>Split-the-Deal 게시판</h2>
+                    <button id="open-deal-modal" class="btn btn-primary">새 글 쓰기</button>
                 </div>
-                <p class="section-desc">Don't need three? Find a partner to split the 1+1 or 2+1 costs!</p>
+                <p class="section-desc">혼자서 3개는 너무 많나요? 1+1, 2+1 행사를 같이 나눌 파트너를 찾으세요!</p>
                 <div id="split-deal-grid" class="grid">
                     <!-- Dynamic deals injected here -->
                 </div>
@@ -77,34 +80,34 @@
         <section id="request-section" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2>Item Request Form</h2>
+                    <h2>상품 발주 요청</h2>
                 </div>
                 <div class="request-container">
                     <div class="request-form-card">
                         <form id="order-request-form">
                             <div class="form-group">
-                                <label for="item-name">Item Name</label>
-                                <input type="text" id="item-name" placeholder="e.g. Strawberry Milk" required>
+                                <label for="item-name">상품명</label>
+                                <input type="text" id="item-name" placeholder="예: 딸기우유" required>
                             </div>
                             <div class="form-group">
-                                <label for="item-category">Category</label>
+                                <label for="item-category">카테고리</label>
                                 <select id="item-category" required>
-                                    <option value="">Select Category</option>
-                                    <option value="Snack">Snack</option>
-                                    <option value="Beverage">Beverage</option>
-                                    <option value="Instant Meal">Instant Meal</option>
-                                    <option value="Other">Other</option>
+                                    <option value="">카테고리 선택</option>
+                                    <option value="Snack">과자류</option>
+                                    <option value="Beverage">음료</option>
+                                    <option value="Instant Meal">간편식</option>
+                                    <option value="Other">기타</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="request-reason">Reason / Note</label>
-                                <textarea id="request-reason" rows="3" placeholder="Why should the manager stock this?" required></textarea>
+                                <label for="request-reason">요청 사유</label>
+                                <textarea id="request-reason" rows="3" placeholder="점주님이 참고하실 수 있도록 적어주세요." required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-block">Submit Request</button>
+                            <button type="submit" class="btn btn-block">발주 요청하기</button>
                         </form>
                     </div>
                     <div class="recent-requests">
-                        <h3>Recent Requests</h3>
+                        <h3>최근 요청 및 인기 상품</h3>
                         <ul id="request-list">
                             <!-- Dynamic requests injected here -->
                         </ul>
@@ -118,24 +121,24 @@
     <div id="deal-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <h3>Create a Split Deal</h3>
+            <h3>Split-the-Deal 등록</h3>
             <form id="create-deal-form">
                 <div class="form-group">
-                    <label for="deal-item">Item to Split</label>
-                    <input type="text" id="deal-item" placeholder="e.g. Coca Cola 500ml" required>
+                    <label for="deal-item">나눌 상품명</label>
+                    <input type="text" id="deal-item" placeholder="예: 코카콜라 500ml" required>
                 </div>
                 <div class="form-group">
-                    <label for="deal-type">Promotion Type</label>
+                    <label for="deal-type">행사 타입</label>
                     <select id="deal-type" required>
                         <option value="1+1">1+1</option>
                         <option value="2+1">2+1</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="deal-location">Meeting Point</label>
-                    <input type="text" id="deal-location" placeholder="e.g. Dorm Lobby" required>
+                    <label for="deal-location">만날 장소</label>
+                    <input type="text" id="deal-location" placeholder="예: 기숙사 A동 로비" required>
                 </div>
-                <button type="submit" class="btn btn-block">Post Deal</button>
+                <button type="submit" class="btn btn-block">등록하기</button>
             </form>
         </div>
     </div>
