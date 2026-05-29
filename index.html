@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenvenience Store - KENTECH Seven-Eleven Smart Service</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts for a modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <span class="logo-text">Kenvenience</span>
+                <span class="logo-subtext">Store</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#promo-section">Promos</a></li>
+                <li><a href="#split-section">Split-the-Deal</a></li>
+                <li><a href="#request-section">Request Item</a></li>
+            </ul>
+            <div class="mobile-menu-btn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section / Announcements -->
+        <section class="hero">
+            <div class="container">
+                <h1>KENTECH Dormitory <br><span class="highlight">Smart Convenience</span></h1>
+                <p>Check today's 1+1 / 2+1 deals, find split partners, and request your favorite items.</p>
+                <div class="announcement-bar">
+                    <span class="badge">Notice</span> New Seven-Eleven items arrived this morning!
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 1: Promo & Stock Viewer -->
+        <section id="promo-section" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Current Promotions</h2>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="Snack">Snacks</button>
+                        <button class="filter-btn" data-filter="Beverage">Drinks</button>
+                        <button class="filter-btn" data-filter="Instant Meal">Meals</button>
+                    </div>
+                </div>
+                <div id="promo-grid" class="grid">
+                    <!-- Dynamic items injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Split-the-Deal Hub -->
+        <section id="split-section" class="section bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Split-the-Deal Board</h2>
+                    <button id="open-deal-modal" class="btn btn-primary">Create New Deal</button>
+                </div>
+                <p class="section-desc">Don't need three? Find a partner to split the 1+1 or 2+1 costs!</p>
+                <div id="split-deal-grid" class="grid">
+                    <!-- Dynamic deals injected here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Item Pre-Order Request -->
+        <section id="request-section" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Item Request Form</h2>
+                </div>
+                <div class="request-container">
+                    <div class="request-form-card">
+                        <form id="order-request-form">
+                            <div class="form-group">
+                                <label for="item-name">Item Name</label>
+                                <input type="text" id="item-name" placeholder="e.g. Strawberry Milk" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="item-category">Category</label>
+                                <select id="item-category" required>
+                                    <option value="">Select Category</option>
+                                    <option value="Snack">Snack</option>
+                                    <option value="Beverage">Beverage</option>
+                                    <option value="Instant Meal">Instant Meal</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="request-reason">Reason / Note</label>
+                                <textarea id="request-reason" rows="3" placeholder="Why should the manager stock this?" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-block">Submit Request</button>
+                        </form>
+                    </div>
+                    <div class="recent-requests">
+                        <h3>Recent Requests</h3>
+                        <ul id="request-list">
+                            <!-- Dynamic requests injected here -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal for Creating New Deal -->
+    <div id="deal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Create a Split Deal</h3>
+            <form id="create-deal-form">
+                <div class="form-group">
+                    <label for="deal-item">Item to Split</label>
+                    <input type="text" id="deal-item" placeholder="e.g. Coca Cola 500ml" required>
+                </div>
+                <div class="form-group">
+                    <label for="deal-type">Promotion Type</label>
+                    <select id="deal-type" required>
+                        <option value="1+1">1+1</option>
+                        <option value="2+1">2+1</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="deal-location">Meeting Point</label>
+                    <input type="text" id="deal-location" placeholder="e.g. Dorm Lobby" required>
+                </div>
+                <button type="submit" class="btn btn-block">Post Deal</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Kenvenience Store - KENTECH AI Programming Assignment 4</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
