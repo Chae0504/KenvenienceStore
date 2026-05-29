@@ -21,7 +21,12 @@ Kenvenience Store is designed to improve the convenience of dormitory residents 
 2.  Open `index.html` in any modern web browser.
 
 ## Vercel Deployment
--   **Deployment URL**: [https://kenveniencestore-git-main-zxf2007z-7169s-projects.vercel.app/](https://kenveniencestore-git-main-zxf2007z-7169s-projects.vercel.app/)
+-   **Production URL**: [https://kenveniencestore.vercel.app/](https://kenveniencestore.vercel.app/) (Recommended)
+-   **Preview URL**: [https://kenveniencestore-git-main-zxf2007z-7169s-projects.vercel.app/](https://kenveniencestore-git-main-zxf2007z-7169s-projects.vercel.app/)
+
+## Screenshots
+![Dashboard Overview](https://via.placeholder.com/800x450?text=Kenvenience+Store+Dashboard)
+*Note: Replace with actual screenshots of the live site for final submission.*
 
 ---
 *Created by Chae0504 for Assignment 4, KENTECH 2026.*
